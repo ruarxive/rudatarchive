@@ -5,8 +5,20 @@ Public list of portals and websites for archival https://airtable.com/shr1rzsajT
 
 Repository structure:
 
-/code - code related to archival of each data portal/website. Separated by folder like "data.gov.ru", "data.ulgov.ru"
-/data - metadata with list of portals (not data from portal, Github repository couldn't handle easily hundreds of gigabytes)
+* /code - code related to archival of each data portal/website. Separated by folder like "data.gov.ru", "data.ulgov.ru"
+
+## Guides
+
+### How to do web archive
+
+Please read instruction in Russian https://ruarxive.org/kb/instruments/howto-collect/make-copy-website
+
+## Current status
+
+* data.gov.ru - DONE
+* rosstat.gov.ru/opendata - DONE
+* data.mos.ru - In progress
+* data.ulgov.ru - In progress
 
 ## More info about archival campaign
 
@@ -14,4 +26,6 @@ Repository structure:
 * Ruarxive telegram channel - https://t.me/ruarxive
 
 ## Contacts 
+Infoculture - infoculture@infoculture.ru, https://infoculture.ru
+
 Ivan Begtin - ivan@begtin.tech, https://t.me/ibegtin
