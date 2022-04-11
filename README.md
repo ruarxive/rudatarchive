@@ -17,8 +17,11 @@ Please read instruction in Russian https://ruarxive.org/kb/instruments/howto-col
 
 * data.gov.ru - DONE
 * rosstat.gov.ru/opendata - DONE
-* data.mos.ru - In progress
-* data.ulgov.ru - In progress
+* opendata.mkrf.ru - DONE
+* data.mos.ru - DONE
+* fedstat.ru - DONE
+* hubofdata.ru - In progress
+* data.ulgov.ru - Planned
 
 ## More info about archival campaign
 
