@@ -15,11 +15,13 @@ Please read instruction in Russian https://ruarxive.org/kb/instruments/howto-col
 
 ## Current status
 
+
 * data.gov.ru - DONE
 * rosstat.gov.ru/opendata - DONE
 * opendata.mkrf.ru - DONE
 * data.mos.ru - DONE
 * fedstat.ru - DONE
+* data.fss.ru - Partially done, site irresponsive
 * hubofdata.ru - In progress
 * data.ulgov.ru - Planned
 
