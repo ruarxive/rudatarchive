@@ -25,6 +25,22 @@ Please read instruction in Russian https://ruarxive.org/kb/instruments/howto-col
 * hubofdata.ru - In progress
 * data.ulgov.ru - Planned
 
+## 2026 re-run
+
+Collectors for the November 2026 re-run (data.mos.ru first, it is expected to close):
+
+* data.mos.ru - [code/data.mos.ru/collect.py](code/data.mos.ru/collect.py), frontend API, all 1 248 datasets incl. archive
+* data.gov.ru (new portal) - [code/data.gov.ru/collect_v2.py](code/data.gov.ru/collect_v2.py)
+* opendata.mkrf.ru, data.ulgov.ru - [code/opendata-standard/collect.py](code/opendata-standard/collect.py)
+* fedstat.ru - [code/fedstat.ru/collect.py](code/fedstat.ru/collect.py)
+* data.fss.ru - [code/data.fss.ru/collect.py](code/data.fss.ru/collect.py) (API answered 504 on 2026-11-03)
+
+Not collectable on 2026-11-03: rosstat.gov.ru and stat.customs.ru (anti-DDoS redirect `/DDoS01/`),
+hubofdata.ru (bot challenge), showdata.gks.ru (no answer from any route).
+
+Most portals answer only from Russian IP addresses: set `RUDATA_PROXY` (e.g. `socks5h://127.0.0.1:1080`).
+Some use the Russian Trusted Root CA: see [code/certs](code/certs). `pip install -r requirements.txt`.
+
 ## More info about archival campaign
 
 * Ruarxive website - https://ruarxive.org

@@ -1,0 +1,3 @@
+requests[socks]
+typer
+beautifulsoup4

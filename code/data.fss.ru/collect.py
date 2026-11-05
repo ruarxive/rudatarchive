@@ -14,9 +14,6 @@ import typer
 from bs4 import BeautifulSoup
 import datetime
 import csv
-import chardet
-import bson
-import xmltodict
 import zipfile
 import shutil
 PACKAGES_DIR = 'data/packages'
@@ -31,9 +28,20 @@ DATA_MAP = {'https://data.fss.ru/open/api/openData' : 'opendata.json',
 META_DATA_PATTERN = 'https://data.fss.ru/open/api/openDataPass?idIndicator=%s'
 CSV_DATA_PATTERN = 'https://data.fss.ru/open/api/file?idIndicator=%s'
 
+# RUDATA_PROXY: proxy for a Russian IP; RUDATA_CA_BUNDLE: bundle with Russian Trusted Root CA (see ../certs)
+SESSION = requests.Session()
+if os.environ.get('RUDATA_PROXY'):
+    SESSION.proxies = {'http': os.environ['RUDATA_PROXY'], 'https': os.environ['RUDATA_PROXY']}
+    # otherwise HTTP_PROXY and system proxies take precedence over SESSION.proxies
+    SESSION.trust_env = False
+if os.environ.get('RUDATA_CA_BUNDLE'):
+    SESSION.verify = os.environ['RUDATA_CA_BUNDLE']
+
+
 def get_file(url, filename, aria2=False, aria2path=None):
     logging.info('Retrieving %s from %s' % (filename, url))
-    page = requests.get(url, stream=True, verify=False)
+    page = SESSION.get(url, stream=True, timeout=300)
+    page.raise_for_status()
     if not aria2:
         f = open(filename, 'wb')
         total = 0
@@ -69,18 +77,19 @@ def read_list(filename):
 
 
 @app.command()
-def collectdata(force: bool = False):
+def collectdata(force: bool = False, output: str = 'data'):
+    os.makedirs(os.path.join(output, 'packages'), exist_ok=True)
     for url, filename in DATA_MAP.items():
-        if not os.path.exists(os.path.join('data', filename)):
-            get_file(url, os.path.join('data', filename))
-            print('Saved %s to %s' % (url, os.path.join('data', filename)))
-    data = read_list('data/opendata.json')
+        if not os.path.exists(os.path.join(output, filename)):
+            get_file(url, os.path.join(output, filename))
+            print('Saved %s to %s' % (url, os.path.join(output, filename)))
+    data = read_list(os.path.join(output, 'opendata.json'))
     for item in data:
         id = item['idIndicator']
-        filename = os.path.join('data', 'packages', '%s_meta.json' % (str(id)))
+        filename = os.path.join(output, 'packages', '%s_meta.json' % (str(id)))
         if not os.path.exists(filename):
             get_file(META_DATA_PATTERN % str(id), filename)
-        filename = os.path.join('data', 'packages', '%s_data.csv' % (str(id)))
+        filename = os.path.join(output, 'packages', '%s_data.csv' % (str(id)))
         if not os.path.exists(filename):
             get_file(CSV_DATA_PATTERN % str(id), filename)
         print('Stored %s' % (str(id)))
